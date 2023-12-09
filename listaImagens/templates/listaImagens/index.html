@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sua Página de Imagens</title>
+</head>
+<body>
+    <h1>Lista de Imagens</h1>
+    {% load base64encode %}
+    {% for imagem in imagens %}
+        <div style="margin-bottom: 20px;">
+            <p>ID: {{ imagem.id }}, Caminho: {{ imagem.caminho }}</p>
+            {% if imagem.conteudo %}
+                <img src="data:image/png;base64,{{ imagem.conteudo|b64encode }}" alt="{{ imagem.id }}" style="max-width: 10%;"/>
+            {% else %}
+                <p>Nenhum conteúdo de imagem disponível.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <!-- Adicione os links de paginação aqui -->
+    <div style="margin-top: 20px;">
+        {% if imagens.has_previous %}
+            <a href="?page={{ imagens.previous_page_number }}">Página anterior</a>
+        {% endif %}
+        {% if imagens.has_next %}
+            <a href="?page={{ imagens.next_page_number }}">Próxima página</a>
+        {% endif %}
+    </div>
+</body>
+</html>
